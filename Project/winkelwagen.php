@@ -109,7 +109,10 @@ include 'databaseLogin.php';
 ?>
 
 
-            <button>Afrekenen</button>
+
+            <form action="databaseLogin.php" method="post">
+                <button type="submit" name="Afrekenen">Afrekenen</button>
+            </form>
         </section>
     </main>
     

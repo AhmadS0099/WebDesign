@@ -76,22 +76,44 @@
             } else {
                 echo "Username and password are required for login";
             }
-        }
-        if(isset($_POST['product_name'])) {
+        } elseif(isset($_POST['product_name'])) {
             // Haal de productnaam op uit de POST-variabele
             $productName = $_POST['product_name'];
     
             // Verwijder de bestelling met de opgegeven productnaam voor de huidige gebruiker
             $username = $_SESSION['username'];
-            $deleteQuery = "DELETE FROM tblcart WHERE username='$username' AND ProductName='$productName'";
+            $deleteQuery = "DELETE FROM tblcart WHERE username='$username' AND ProductName='$productName' LIMIT 1";
             if ($conn->query($deleteQuery) === TRUE) {
                 echo "Bestelling succesvol geannuleerd.";
                 header("Location: winkelwagen.php");
             } else {
                 echo "Fout bij annuleren van bestelling: " . $conn->error;
             }
-        } else {
-            echo "Productnaam niet ontvangen.";
+        } 
+        if(isset($_POST['Afrekenen'])) {
+            // De gebruiker klikt op "Afrekenen" knop
+            // We willen de bestelling van de huidige gebruiker markeren als "Verstuurd"
+        
+            // Haal de gebruikersnaam op uit de sessie
+            $username = $_SESSION['username'];
+        
+            // Voorbereidde SQL-query om SQL-injecties te voorkomen
+            $sql = $conn->prepare("UPDATE tblcart SET Sent = 1 WHERE Username = ?");
+            $sql->bind_param("s", $username);
+        
+            // Executeer de SQL-query
+            if ($sql->execute()) {
+                // De bestelling is succesvol gemarkeerd als "Verstuurd"
+                header("Location: winkelwagen.php");
+                exit; // Zorg ervoor dat er geen extra output is voordat de header wordt verzonden
+            } else {
+                // Er is een fout opgetreden bij het markeren van de bestelling
+                echo "Fout bij het afrekenen: " . $sql->error;
+            }
+        
+            // Sluit de prepared statement
+            $sql->close();
         }
+
     }
 ?>
