@@ -1,0 +1,73 @@
+/* index.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0; /* Light gray background */
+    padding: 20px;
+}
+
+header {
+    background-color: #333; /* Dark gray header */
+    text-align: center;
+    padding: 20px 0;
+    color: #fff; /* White text */
+}
+
+.logo {
+    max-width: 200px;
+    max-height: 200px;
+    margin: 0 auto;
+}
+
+
+        nav ul {
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 10px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s ease; /* Smooth color transition */
+        }
+
+        nav ul li a:hover {
+            color: #ffd700; /* Change color on hover to gold */
+        }
+
+        .Foto {
+            max-width: 200px;
+            max-height: 200px;
+            margin: 0 auto;
+            transition: transform 0.3s ease; /* Smooth scale transition */
+        }
+
+        .Foto:hover {
+            transform: scale(1.1); /* Scale up image on hover */
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px; /* Reduce margin */
+            padding: 20px 0; /* Add padding */
+            background-color: #333; /* Dark gray footer */
+            color: #fff; /* White text */
+        }
+
+        /* Adjustments for product layout */
+        section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        section > div {
+            flex: 1;
+            margin: 20px;
+            text-align: center;
+        }
