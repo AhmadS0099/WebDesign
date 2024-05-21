@@ -21,6 +21,7 @@ include 'databaseLogin.php';
                 <li><a href="producten.php">Producten</a></li>
                 <li><a href="login.php">Login</a></li>
                 <li><a href="winkelwagen.php">winkelwagen</a></li>
+                <li><a href="bestellingen.php">Alle bestellingen</a></li>
             </ul>
         </nav>
     </header>

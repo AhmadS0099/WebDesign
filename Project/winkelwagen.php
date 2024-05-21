@@ -36,7 +36,7 @@ include 'databaseLogin.php';
                     $username = $_SESSION['username'];
 
                     // Voorbereidde SQL-query om SQL-injecties te voorkomen
-                    $sql = $conn->prepare("SELECT ProductName, Price FROM tblcart WHERE username = ?");
+                    $sql = $conn->prepare("SELECT ProductName, Price, Sent FROM tblcart WHERE username = ?");
                     $sql->bind_param("s", $username);
 
                     // Executeer de SQL-query
@@ -50,7 +50,13 @@ include 'databaseLogin.php';
                         // Loop door de resultaten en print elk rij
                         while ($row = $result->fetch_assoc()) {
                             echo "ProductName: " . $row['ProductName'] . "<br>";
-                            echo "Price: " . $row['Price'] . "<br>";
+                            echo "Price: €" . $row['Price']. "<br>";
+                            if (  $row['Sent'] == true){
+                                echo "Status : Verstuurd";
+                            }else{
+                                echo "Status : In behandeling";
+                            }
+
                             echo "<form method='post' action='databaseLogin.php'>"; // Open het formulier
                             echo "<input type='hidden' name='product_name' value='" . $row['ProductName'] . "'>"; // Verborgen veld om productnaam door te geven
                             echo "<button type='submit'>Annuleren</button>"; // Knop om de bestelling te annuleren
