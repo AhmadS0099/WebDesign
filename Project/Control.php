@@ -86,6 +86,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <li><a href="producten.php">Producten</a></li>
                 <li><a href="login.php">Login</a></li>
                 <li><a href="winkelwagen.php">winkelwagen</a></li>
+                <li><a href="AllBestellingen.php">Bestellingen</a></li>
             </ul>
         </nav>
     </header>
