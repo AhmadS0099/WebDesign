@@ -25,6 +25,7 @@ if(isset($_POST['product_prijs']) && isset($_POST['product_name']) && isset($_PO
 
     if ($conn->query($sql) === TRUE) {
         echo "Product succesvol toegevoegd aan winkelwagen.";
+        header("Location: producten.php");
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }

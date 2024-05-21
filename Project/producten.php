@@ -27,6 +27,7 @@ function displayProducts($category) {
             <form action="databaseConnect.php" method="post">
                 <input type="hidden" name="product_prijs" value="<?php echo $product["Price"]; ?>">
                 <input type="hidden" name="product_name" value="<?php echo $product["Name"]; ?>">
+                <input type="hidden" name="username" value="<?php echo $_SESSION['username']; ?>">
                 <button type="submit">Voeg toe aan winkelwagen</button>
             </form>
         </div>
