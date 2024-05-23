@@ -9,6 +9,10 @@
             $input_username = $_POST['username'];
             $input_password = $_POST['password'];
 
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                echo "Ongeldig e-mailadres.";
+                exit();
+            }
             // Validate inputs
             if (!empty($input_username) && !empty($input_password)) {
                 // Prepare SQL query to insert new user into the 'tbllogin' table
