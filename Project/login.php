@@ -9,8 +9,8 @@
     <style>
         .icon {
             display: inline-block;
-            width: 100px;
-            height: 100px;
+            width: 20px;
+            height: 20px;
             vertical-align: middle;
         }
         .icon.valid {
@@ -25,20 +25,34 @@
     <script>
         function validateEmail() {
             var email = document.getElementById('email').value;
-            var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+            var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.com$/;
             var icon = document.getElementById('email-icon');
             if (emailPattern.test(email)) {
                 icon.className = 'icon valid';
+                document.getElementById('username').focus();
             } else {
                 icon.className = 'icon invalid';
             }
         }
+
 
         function validateForm() {
             var email = document.getElementById('email').value;
             var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
             if (!emailPattern.test(email)) {
                 alert("Ongeldig e-mailadres.");
+                return false;
+            }
+            
+            var username = document.getElementById('username').value;
+            if (username.length < 3) {
+                alert("Gebruikersnaam moet minstens 3 tekens lang zijn.");
+                return false;
+            }
+
+            var password = document.getElementById('password').value;
+            if (password.length < 6) {
+                alert("Wachtwoord moet minstens 6 tekens lang zijn.");
                 return false;
             }
             return true;
