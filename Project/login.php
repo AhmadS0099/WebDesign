@@ -29,7 +29,7 @@
             var icon = document.getElementById('email-icon');
             if (emailPattern.test(email)) {
                 icon.className = 'icon valid';
-                document.getElementById('username').focus();
+                //document.getElementById('username').focus();
             } else {
                 icon.className = 'icon invalid';
             }
@@ -47,12 +47,6 @@
             var username = document.getElementById('username').value;
             if (username.length < 3) {
                 alert("Gebruikersnaam moet minstens 3 tekens lang zijn.");
-                return false;
-            }
-
-            var password = document.getElementById('password').value;
-            if (password.length < 6) {
-                alert("Wachtwoord moet minstens 6 tekens lang zijn.");
                 return false;
             }
             return true;
@@ -89,6 +83,10 @@
                 <input type="text" id="username" name="username"><br>
                 <label for="password">Wachtwoord:</label><br>
                 <input type="password" id="password" name="password"><br>
+                <label for="WoonPlaats">WoonPlaats:</label><br>
+                <input type="WoonPlaats" id="WoonPlaats" name="WoonPlaats"><br>
+                <label for="Adres">Adres:</label><br>
+                <input type="Adres" id="Adres" name="Adres"><br>
                 <input type="submit" name="login" value="Login">
                 <input type="submit" name="register" value="Register">
             </form>

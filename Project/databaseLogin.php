@@ -8,15 +8,14 @@
             // Get username and password from the form
             $input_username = $_POST['username'];
             $input_password = $_POST['password'];
+            $input_WoonPlaats = $_POST['WoonPlaats'];
+            $input_Adres = $_POST['Adres'];
 
-            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                echo "Ongeldig e-mailadres.";
-                exit();
-            }
+            
             // Validate inputs
-            if (!empty($input_username) && !empty($input_password)) {
+            if (!empty($input_username) && !empty($input_password) && !empty($input_WoonPlaats) && !empty($input_Adres)) {
                 // Prepare SQL query to insert new user into the 'tbllogin' table
-                $sql = "INSERT INTO tbllogin (Name, PassWord) VALUES ('$input_username', '$input_password')";
+                $sql = "INSERT INTO tbllogin (Name, PassWord, Adres, WoonPlaats ) VALUES ('$input_username', '$input_password', '$input_Adres', '$input_WoonPlaats')";
 
                 if ($conn->query($sql) === TRUE) {
                     echo "Registration successful";

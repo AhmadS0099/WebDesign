@@ -2,6 +2,12 @@
 include 'databaseConnect.php'; 
 include 'databaseLogin.php'; 
 
+/**
+ * Retrieves products by category from the database.
+ *
+ * @param int $category The ID of the category to filter products by.
+ * @return array An array of products in the specified category.
+ */
 function getProductsByCategory($category) {
     global $conn;
     $stmt = $conn->prepare("SELECT Name, Price, foto AS ImageURL, Omschrijving AS Description, Catagory AS Category, Merk AS Brand FROM product WHERE Catagory = ?");
@@ -34,7 +40,6 @@ function displayProducts($category) {
         <?php
     }
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -54,9 +59,13 @@ function displayProducts($category) {
                 <li><a href="index.php">Homepage</a></li>
                 <li><a href="producten.php">Producten</a></li>
                 <li><a href="login.php">Login</a></li>
-                <li><a href="winkelwagen.php">winkelwagen</a></li>
+                <li><a href="winkelwagen.php">Winkelwagen</a></li>
             </ul>
         </nav>
+        <form action="search.php" method="get">
+            <input type="text" name="query" placeholder="Zoek producten">
+            <button type="submit">Zoeken</button>
+        </form>
     </header>
     
     <main>
@@ -82,7 +91,7 @@ function displayProducts($category) {
         </section>
 
         <section>
-            <h2> Other </h2>
+            <h2>Overige</h2>
             <div>
                 <?php displayProducts(4); ?>
             </div>
