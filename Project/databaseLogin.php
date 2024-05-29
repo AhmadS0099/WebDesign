@@ -10,22 +10,39 @@
             $input_password = $_POST['password'];
             $input_WoonPlaats = $_POST['WoonPlaats'];
             $input_Adres = $_POST['Adres'];
-
-            
-            // Validate inputs
-            if (!empty($input_username) && !empty($input_password) && !empty($input_WoonPlaats) && !empty($input_Adres)) {
-                // Prepare SQL query to insert new user into the 'tbllogin' table
-                $sql = "INSERT INTO tbllogin (Name, PassWord, Adres, WoonPlaats ) VALUES ('$input_username', '$input_password', '$input_Adres', '$input_WoonPlaats')";
-
-                if ($conn->query($sql) === TRUE) {
-                    echo "Registration successful";
+            $email = $_POST['email'];
+    
+            // Generate a unique activation code
+            $activationCode = bin2hex(random_bytes(16));
+    
+            // Prepare SQL query to insert new user into the 'tbllogin' table
+            $sql = "INSERT INTO tbllogin (Name, PassWord, Adres, WoonPlaats, activation_code) VALUES (?, ?, ?, ?, ?)";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("sssss", $input_username, $input_password, $input_Adres, $input_WoonPlaats, $activationCode);
+    
+            if ($stmt->execute()) {
+                // Registration successful
+                // Send welcome note
+                $welcomeMessage = "Welcome, $input_username! Thank you for registering.";
+                // Example of sending an email
+                $to = $email; // Change to the user's email address
+                $subject = 'Welcome to our website';
+                $message = "Hello, $input_username! Thank you for registering.";
+                $headers = 'From: your_email@example.com'; // Change this to your email address
+    
+                if (mail($to, $subject, $message, $headers)) {
+                    echo "Registration successful. Welcome email sent.";
                 } else {
-                    echo "Error: " . $sql . "<br>" . $conn->error;
+                    echo "Registration successful, but failed to send welcome email.";
                 }
             } else {
-                echo "Username and password are required for registration";
+                echo "Error: " . $sql . "<br>" . $conn->error;
             }
-        } elseif (isset($_POST['login'])) { // If the form submitted is for login
+    
+            // Close the statement
+            $stmt->close();
+        }  
+        elseif (isset($_POST['login'])) { // If the form submitted is for login
             $input_username = $_POST['username'];
             $input_password = $_POST['password'];
 
