@@ -1,4 +1,32 @@
-<?php include 'databaseConnect.php'; ?>
+<?php include 'databaseConnect.php';
+function getProductsBySale() {
+    global $conn;
+    $stmt = $conn->prepare("SELECT Name, Sale, foto AS ImageURL, Omschrijving AS Description, Catagory AS Category, Merk AS Brand FROM product WHERE isonSale = 1");
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $products = array();
+    while ($row = $result->fetch_assoc()) {
+        $products[] = $row;
+    }
+    return $products;
+}
+
+
+function displayProductsSale() {
+    $products = getProductsBySale();
+    foreach ($products as $product) {
+        ?>
+        <div>
+        <img src="<?php echo $product["ImageURL"]; ?>" alt="Foto" class="Foto" width="200" height="200">
+            <h3><?php echo $product["Name"]; ?></h3>
+            <p>Sale Prijs: €<?php echo $product["Sale"]; ?></p>
+            <p>Beschrijving: <?php echo $product["Description"]; ?></p>
+        </div>
+        <?php
+    }
+}
+
+?>
 <!DOCTYPE html>
 <html lang="nl">
 <head>
@@ -19,6 +47,9 @@
 
             </ul>
         </nav>
+
+
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
     
     </header>
     
@@ -28,14 +59,7 @@
             <div>
                 <h3>Aanbieding 1</h3>
                 <p>50% korting op alle schoenen!</p>
-            </div>
-            <div>
-                <h3>Aanbieding 2</h3>
-                <p>Koop een jas en krijg een sjaal gratis!</p>
-            </div>
-            <div>
-                <h3>Aanbieding 3</h3>
-                <p>Gratis verzending bij bestellingen boven €50!</p>
+                <?php displayProductsSale(); ?>
             </div>
         </section>
     </main>

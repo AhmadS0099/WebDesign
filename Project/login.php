@@ -45,10 +45,6 @@
             }
             
             var username = document.getElementById('username').value;
-            if (username.length < 3) {
-                alert("Gebruikersnaam moet minstens 3 tekens lang zijn.");
-                return false;
-            }
             return true;
         }
     </script>
@@ -74,9 +70,21 @@
     
     <main>
         <section>
-            <h2>Login / Register</h2>
+            <h2>Login</h2>
+            <form action="databaseLogin.php" method="post">
+                <label for="username">Gebruikersnaam:</label><br>
+                <input type="text" id="username" name="username"><br>
+                <label for="password">Wachtwoord:</label><br>
+                <input type="password" id="password" name="password"><br>
+
+                <input type="submit" name="login" value="Login">
+            </form>
+        </section>
+
+        <section>
+            <h2>Register</h2>
             <form action="databaseLogin.php" method="post" onsubmit="return validateForm()">
-                <label for="email">email:</label><br> 
+                <label for="email">Email:</label><br> 
                 <input type="text" id="email" name="email" onkeyup="validateEmail()">
                 <span id="email-icon" class="icon"></span><br>
                 <label for="username">Gebruikersnaam:</label><br>
@@ -84,10 +92,9 @@
                 <label for="password">Wachtwoord:</label><br>
                 <input type="password" id="password" name="password"><br>
                 <label for="WoonPlaats">WoonPlaats:</label><br>
-                <input type="WoonPlaats" id="WoonPlaats" name="WoonPlaats"><br>
+                <input type="text" id="WoonPlaats" name="WoonPlaats"><br>
                 <label for="Adres">Adres:</label><br>
-                <input type="Adres" id="Adres" name="Adres"><br>
-                <input type="submit" name="login" value="Login">
+                <input type="text" id="Adres" name="Adres"><br>
                 <input type="submit" name="register" value="Register">
             </form>
         </section>

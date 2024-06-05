@@ -11,6 +11,7 @@
             $input_WoonPlaats = $_POST['WoonPlaats'];
             $input_Adres = $_POST['Adres'];
             $email = $_POST['email'];
+            
     
             // Generate a unique activation code
             $activationCode = bin2hex(random_bytes(16));
@@ -32,6 +33,7 @@
     
                 if (mail($to, $subject, $message, $headers)) {
                     echo "Registration successful. Welcome email sent.";
+                    header("Location: Extra.php"); 
                 } else {
                     echo "Registration successful, but failed to send welcome email.";
                 }
@@ -45,6 +47,7 @@
         elseif (isset($_POST['login'])) { // If the form submitted is for login
             $input_username = $_POST['username'];
             $input_password = $_POST['password'];
+            
 
             if (!empty($input_username) && !empty($input_password)) {
                 // Call the stored procedure

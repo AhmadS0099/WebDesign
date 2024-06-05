@@ -10,7 +10,7 @@ include 'databaseLogin.php';
  */
 function getProductsByCategory($category) {
     global $conn;
-    $stmt = $conn->prepare("SELECT Name, Price, foto AS ImageURL, Omschrijving AS Description, Catagory AS Category, Merk AS Brand FROM product WHERE Catagory = ?");
+    $stmt = $conn->prepare("SELECT Name, Price, Sale, isOnSale, foto AS ImageURL, Omschrijving AS Description, Catagory AS Category, Merk AS Brand FROM product WHERE Catagory = ?");
     $stmt->bind_param("i", $category);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -21,25 +21,42 @@ function getProductsByCategory($category) {
     return $products;
 }
 
+
+
 function displayProducts($category) {
     $products = getProductsByCategory($category);
     foreach ($products as $product) {
         ?>
         <div>
-            <img src="<?php echo $product["ImageURL"]; ?>" alt="Foto" class="Foto">            
+            <img src="<?php echo $product["ImageURL"]; ?>" alt="Foto" class="Foto">
             <h3><?php echo $product["Name"]; ?></h3>
-            <p>Prijs: €<?php echo $product["Price"]; ?></p>
+            <?php
+            if ($product["isOnSale"] == 1) {
+                echo "<p>SALE: Oude prijs: €" . $product["Price"] . ", Nieuwe prijs: €" . $product["Sale"] . "</p>";
+            } else {
+                echo "<p>Prijs: €" . $product["Price"] . "</p>";
+            }
+            ?>
             <p>Beschrijving: <?php echo $product["Description"]; ?></p>
             <form action="databaseConnect.php" method="post">
                 <input type="hidden" name="product_prijs" value="<?php echo $product["Price"]; ?>">
                 <input type="hidden" name="product_name" value="<?php echo $product["Name"]; ?>">
-                <input type="hidden" name="username" value="<?php echo $_SESSION['username']; ?>">
-                <button type="submit">Voeg toe aan winkelwagen</button>
+                <?php
+                if(!empty($_SESSION['username'])){
+                    ?>
+                    <input type="hidden" name="username" value="<?php echo $_SESSION['username']; ?>">
+                    <button type="submit">Voeg toe aan winkelwagen</button>
+                <?php
+                }
+                ?>
+                
             </form>
         </div>
         <?php
     }
 }
+
+
 ?>
 
 <!DOCTYPE html>

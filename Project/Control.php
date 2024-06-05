@@ -36,6 +36,14 @@ function DelteCatfunc($delete_cat) {
     $stmt->close();
 }
 
+function UpdateProductSale($delete_cat, $New_Prijs) {
+    global $conn;
+    $stmt = $conn->prepare("CALL UpdateProductSale(?,?)");
+    $stmt->bind_param("ss", $delete_cat,$New_Prijs );
+    $stmt->execute();
+    $stmt->close();
+}
+
 // Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check if adding product form is submitted
@@ -65,6 +73,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $delete_cat = $_POST["name"];
         DelteCatfunc($delete_cat);
     } 
+    elseif (isset($_POST["UpdatePrijs"])) {
+        $productName = $_POST["product_name"];
+        $New_Prijs = $_POST["New_Prijs"];
+        UpdateProductSale($productName, $New_Prijs);
+    }
 }
 ?>
 
@@ -125,6 +138,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
                 <button type="submit" name="add_product">add product</button>
+            </form>
+        <div></div>
+        </section>
+
+        <section>
+        <div>
+            <h2>Update Sale</h2>
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                <label for="product_name">Naam van het product dat u wilt verwijderen:</label><br>
+                <input type="text" id="product_name" name="product_name" required><br>
+
+                <label for="New_Prijs">New Prijs:</label><br>
+                <input type="text" id="New_Prijs" name="New_Prijs" required><br>
+
+                <button type="submit" name="UpdatePrijs">Verwijder product</button>
             </form>
         <div></div>
         </section>
