@@ -2,7 +2,16 @@
 include 'databaseConnect.php'; // Include database connection file
 include 'databaseLogin.php'; 
 
-// Function to insert a new product into the database
+/**
+ * @brief Inserts a new product into the database.
+ * 
+ * @param[in] name Name of the product.
+ * @param[in] price Price of the product.
+ * @param[in] imageURL URL of the product image.
+ * @param[in] description Description of the product.
+ * @param[in] category Category ID of the product.
+ * @param[in] brand Brand ID of the product.
+ */
 function insertProduct($name, $price, $imageURL, $description, $category, $brand) {
     global $conn;
     $stmt = $conn->prepare("CALL InsertProduct(?, ?, ?, ?, ?, ?)");
@@ -11,7 +20,11 @@ function insertProduct($name, $price, $imageURL, $description, $category, $brand
     $stmt->close();
 }
 
-// Function to delete a product by name
+/**
+ * @brief Deletes a product from the database by its name.
+ * 
+ * @param[in] name Name of the product to be deleted.
+ */
 function deleteProductByName($name) {
     global $conn;
     $stmt = $conn->prepare("CALL DeleteProductByName(?)");
@@ -20,6 +33,12 @@ function deleteProductByName($name) {
     $stmt->close();
 }
 
+/**
+ * @brief Adds a new category to the database.
+ * 
+ * @param[in] name Name of the category.
+ * @param[in] catdetail Details of the category.
+ */
 function AddCatfunc($name, $catdetail) {
     global $conn;
     $stmt = $conn->prepare("CALL AddCat(?,?)");
@@ -28,6 +47,11 @@ function AddCatfunc($name, $catdetail) {
     $stmt->close();
 }
 
+/**
+ * @brief Deletes a category from the database by its name.
+ * 
+ * @param[in] delete_cat Name of the category to be deleted.
+ */
 function DelteCatfunc($delete_cat) {
     global $conn;
     $stmt = $conn->prepare("CALL DeleteCatByName(?)");
@@ -36,6 +60,12 @@ function DelteCatfunc($delete_cat) {
     $stmt->close();
 }
 
+/**
+ * @brief Updates the sale price of a product.
+ * 
+ * @param[in] delete_cat Name of the product.
+ * @param[in] New_Prijs New price of the product.
+ */
 function UpdateProductSale($delete_cat, $New_Prijs) {
     global $conn;
     $stmt = $conn->prepare("CALL UpdateProductSale(?,?)");

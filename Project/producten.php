@@ -21,9 +21,27 @@ function getProductsByCategory($category) {
     return $products;
 }
 
-
+/**
+ * Retrieves the description of a category from the database.
+ *
+ * @param int $category The ID of the category.
+ * @return string The description of the category.
+ */
+function getCategoryDescription($category) {
+    global $conn;
+    $stmt = $conn->prepare("SELECT Omschrijving FROM category WHERE Id = ?");
+    $stmt->bind_param("i", $category);
+    $stmt->execute();
+    $stmt->bind_result($description);
+    $stmt->fetch();
+    $stmt->close();
+    return $description;
+}
 
 function displayProducts($category) {
+    $description = getCategoryDescription($category);
+    echo "<p> $description</p>";
+    
     $products = getProductsByCategory($category);
     foreach ($products as $product) {
         ?>
@@ -33,13 +51,15 @@ function displayProducts($category) {
             <?php
             if ($product["isOnSale"] == 1) {
                 echo "<p>SALE: Oude prijs: €" . $product["Price"] . ", Nieuwe prijs: €" . $product["Sale"] . "</p>";
+                $finalPrice = $product["Sale"];
             } else {
                 echo "<p>Prijs: €" . $product["Price"] . "</p>";
+                $finalPrice = $product["Price"];
             }
             ?>
             <p>Beschrijving: <?php echo $product["Description"]; ?></p>
             <form action="databaseConnect.php" method="post">
-                <input type="hidden" name="product_prijs" value="<?php echo $product["Price"]; ?>">
+                <input type="hidden" name="product_prijs" value="<?php echo $finalPrice; ?>">
                 <input type="hidden" name="product_name" value="<?php echo $product["Name"]; ?>">
                 <?php
                 if(!empty($_SESSION['username'])){

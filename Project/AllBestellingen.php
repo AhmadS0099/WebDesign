@@ -2,6 +2,11 @@
 include 'databaseConnect.php'; 
 include 'databaseLogin.php'; 
 
+/**
+ * Retrieves the all prodcuts from the database
+ * 
+ * @return string All prodcuts from the database
+ */
 function getAllProducts() {
     global $conn;
     $stmt = $conn->prepare("SELECT Username, ProductName, Price, Sent FROM tblcart");

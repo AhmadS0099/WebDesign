@@ -1,4 +1,10 @@
 <?php include 'databaseConnect.php';
+
+/**
+ * Retrieves the prodcuts that are on sale
+ *
+ * @return string The product that are on sale
+ */
 function getProductsBySale() {
     global $conn;
     $stmt = $conn->prepare("SELECT Name, Sale, foto AS ImageURL, Omschrijving AS Description, Catagory AS Category, Merk AS Brand FROM product WHERE isonSale = 1");
@@ -11,7 +17,10 @@ function getProductsBySale() {
     return $products;
 }
 
-
+/**
+ * Displays a list of products
+ *
+ */
 function displayProductsSale() {
     $products = getProductsBySale();
     foreach ($products as $product) {

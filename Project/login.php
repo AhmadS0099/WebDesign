@@ -23,6 +23,13 @@
         }
     </style>
     <script>
+        /**
+         * @brief Validates the email input against a pattern.
+         * 
+         * This function checks if the email input matches a predefined pattern
+         * and updates the icon next to the input field to indicate whether the 
+         * email is valid or invalid.
+         */
         function validateEmail() {
             var email = document.getElementById('email').value;
             var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.com$/;
@@ -35,7 +42,14 @@
             }
         }
 
-
+        /**
+         * @brief Validates the form before submission.
+         * 
+         * This function checks if the email input matches a pattern and alerts
+         * the user if it is invalid. It also retrieves the username input.
+         * 
+         * @return true if the form is valid, false otherwise.
+         */
         function validateForm() {
             var email = document.getElementById('email').value;
             var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;

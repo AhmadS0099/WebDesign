@@ -101,21 +101,22 @@ include 'databaseLogin.php';
                     // Haal de data op uit de resultaten
                     $row = $result->fetch_assoc();
                     // Rond het totale bedrag af tot twee decimalen
-                    $totalPrice = number_format($row['TotalPrice'], 2);
-                    $totalPriceFloat = floatval(($totalPrice));
+                    $totalPrice = floatval($row['TotalPrice']); // Convert string to float
                     
                     // Controleer of de promocode is ingesteld en of deze geldig is
                     if(isset($_POST['promocode']) && ($_POST['promocode'] == '1111' || $_POST['promocode'] == 'ahahahh' || $_POST['promocode'] == 'player2')) {
+                        
                         // Bereken de korting
-                        $discount = $totalPriceFloat * 0.10;
+                        $discount = $totalPrice * 0.10;
                         // Pas de korting toe op de totale prijs
-                        $totalPriceFloat -= $discount;
+                        $totalPrice -= $discount;
                         // Rond het totale bedrag af tot twee decimalen
-                        $totalPriceFloat = number_format($totalPriceFloat, 2);
                     }
+                    $totalPrice = number_format($totalPrice, 2); // Round to two decimal places
+
 
                     // Print het totale bedrag
-                    echo "Total Price: €" . $totalPriceFloat . "<br>";
+                    echo "Total Price: €" . $totalPrice . "<br>";
                 } else {
                     echo "No rows returned.";
                 }
@@ -128,11 +129,12 @@ include 'databaseLogin.php';
 
 
 
-            <form action="" method="post">
+            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                 <label for="promocode">Promocode:</label>
                 <input type="text" id="promocode" name="promocode">
                 <button type="submit" name="applyPromo">Promocode toepassen</button>
             </form>
+
             <form action="databaseLogin.php" method="post">
                 <button type="submit" name="Afrekenen">Afrekenen</button>
             </form>
